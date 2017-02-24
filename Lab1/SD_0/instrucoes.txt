@@ -1,3 +1,0 @@
-1. Implementámos um tratamento de excepções;
-2. Implementámos a resposta do servidor ao cliente, escrevendo a mensagem para o socket do cliente
-no lado do servidor, e no lado do cliente lendo a mensagem e imprimindo para o ecrã.

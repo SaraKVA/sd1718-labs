@@ -1,0 +1,11 @@
+2. 
+	a) A exceção ocorreu no servidor pois não foram apresentados argumentos, 
+surgindo o erro "port out of range";
+	
+	   A exceção ocorreu no cliente pois também não foram argumentos (host e port number de um servidor a correr), 
+originando uma "Connect Exception: connection refused";
+
+	b) No caso do servidor: "IllegalArgumentException"
+	   No caso do cliente: "ConnectException"
+	   
+	c) linha 32

@@ -20,3 +20,19 @@ entre processos, não implementando o que se pretende da função.
     Alínea da aula 
     Introduza um novo procedimento remoto, trocaSimbolos(char simbolo, char simbolo1) que troca os simbolos usados por cada jogador.
     Este procedimento deve ser chamado no inicio do jogo.   
+
+    
+    ttt.lib.c
+
+int trocaSimbolos(char simbol0, char simbol1){    
+	pthread_mutex_lock(&mutex);
+		player0_simbol = simbol0;
+		player1_simbol = simbol1;
+	pthread_mutex_unlock (&mutex);
+}
+
+
+    ttt_client.c
+    
+trocaSimbolos_1_arg.simbol0 = 'A';
+trocaSimbolos_1_arg.simbol1 = 'B';

@@ -17,6 +17,8 @@ ttt_1(char *host)
 	play_args  play_1_arg;
 	int  *result_3;
 	char *checkwinner_1_arg;
+    play_args  *result_4;
+    char *ultima_1_arg;
     
     int player = 0;                              /* Player number - 0 or 1               */
     int go = 0;                                  /* Square selection number for turn     */
@@ -65,36 +67,47 @@ ttt_1(char *host)
         play_res = 0;
         continue;
       }
-
-      play_1_arg.row = --go/3;                                 /* Get row index of square      */
-      play_1_arg.column = go%3;                                /* Get column index of square   */
-      play_1_arg.player = player;
-      
-      
-      result_2 = play_1(&play_1_arg, clnt);
-      if (result_2 == (int *) NULL) {
-          clnt_perror (clnt, "call failed");
-      }
         
-      play_res = *result_2;
+      if(go==10){
+            result_4 = ultima_1((void*)&ultima_1_arg, clnt);
+            if (result_4 == (play_args*) NULL) {
+                clnt_perror (clnt, "call failed");
+            }
+            player = (player+1)%2;   
+            
+      }
+      else{
       
-      
-      if (play_res != 0) {
-        switch (play_res) {
-            case 1:
-                printf("Position outside board.");
-                break;
-            case 2:
-                printf("Square already taken.");
-                break;
-            case 3:
-                printf("Not your turn.");
-                break;
-            case 4:
-                printf("Game has finished.");
-                break;
+        play_1_arg.row = --go/3;                                 /* Get row index of square      */
+        play_1_arg.column = go%3;                                /* Get column index of square   */
+        play_1_arg.player = player;
+        
+        
+        result_2 = play_1(&play_1_arg, clnt);
+        if (result_2 == (int *) NULL) {
+            clnt_perror (clnt, "call failed");
         }
-        printf(" Try again...\n");
+            
+        play_res = *result_2;
+        
+        
+        if (play_res != 0) {
+            switch (play_res) {
+                case 1:
+                    printf("Position outside board.");
+                    break;
+                case 2:
+                    printf("Square already taken.");
+                    break;
+                case 3:
+                    printf("Not your turn.");
+                    break;
+                case 4:
+                    printf("Game has finished.");
+                    break;
+            }
+            printf(" Try again...\n");
+        }
       }
     } while(play_res != 0);
 	
@@ -128,6 +141,7 @@ ttt_1(char *host)
 	clnt_destroy (clnt);
 #endif	 /* DEBUG */
 }
+
 
 
 int

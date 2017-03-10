@@ -18,6 +18,8 @@ static int numPlays = 0;
 /* Mutex */
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
+static play_args last_play;
+
 /* ********** */
 
 void currentBoard(char *buffer) {
@@ -56,6 +58,11 @@ int play(int row, int column, int player) {
     board[row][column] = (player == 1) ? 'X' : 'O';  /* Insert player symbol   */
     nextPlayer = (nextPlayer + 1) % 2;
     numPlays ++;
+    
+    last_play.row = row;
+    last_play.column = column;
+    last_play.player = player;
+    
     pthread_mutex_unlock(&mutex);
     return 0;
 }
@@ -77,7 +84,8 @@ int checkWinner() {
     }
     else
     {
-        /* Check rows and columns for a winning line */
+        /* Check rows and ast_play;
+}columns for a winning line */
         for(line = 0; line <= 2; line ++)
         {
             if((board[line][0] == board[line][1] && board[line][0] == board[line][2]))
@@ -109,6 +117,5 @@ int checkWinner() {
 }
 
 play_args ultima(){
-    
-    
+    return last_play;
 }

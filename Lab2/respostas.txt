@@ -9,30 +9,12 @@
        Os ficheiros que pertecem ao servidor são ttt_svc.c, ttt_server.c, ttt_lib.c;
        O ficheiro que pertece a ambos é ttt_xdr.c. 
 
-    d) Os ficheiros que devem ser alterados pelo programador são o ttt_client.c e o ttt_server.c, pois o sun rpc apenas gera o modelo de comunicação 
-entre processos, não implementando o que se pretende da função.
+    d) Os ficheiros que devem ser alterados pelo programador são o ttt_client.c e o ttt_server.c, pois o sun rpc apenas gera o modelo de comunicação entre processos, não implementando o que se pretende da função.
 
     e) O protocolo que o cliente e servidor usam para comunicar é o UDP para enviar as mensagens, e apenas TCP quando não cabe num datagrama UDP.
 
-    
-/********************************************************************* APAGAR **********************************************************************/
-    
-    Alínea da aula 
-    Introduza um novo procedimento remoto, trocaSimbolos(char simbolo, char simbolo1) que troca os simbolos usados por cada jogador.
-    Este procedimento deve ser chamado no inicio do jogo.   
+____________________________________________________________________
 
-    
-    ttt.lib.c
-
-int trocaSimbolos(char simbol0, char simbol1){    
-	pthread_mutex_lock(&mutex);
-		player0_simbol = simbol0;
-		player1_simbol = simbol1;
-	pthread_mutex_unlock (&mutex);
-}
-
-
-    ttt_client.c
-    
-trocaSimbolos_1_arg.simbol0 = 'A';
-trocaSimbolos_1_arg.simbol1 = 'B';
+Enunciado da aula:
+Criar um novo procedimento remoto ULTIMA que devolve informação sobre a última jogada.
+Chamar o procedimento quando se escreve "10" na consola do cliente.

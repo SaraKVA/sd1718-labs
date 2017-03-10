@@ -107,3 +107,8 @@ int checkWinner() {
     pthread_mutex_unlock (&mutex);
     return result; 
 }
+
+play_args ultima(){
+    
+    
+}

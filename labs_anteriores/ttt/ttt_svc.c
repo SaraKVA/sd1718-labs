@@ -21,6 +21,7 @@ ttt_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
 		play_args play_1_arg;
+		simbol trocasimbolos_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -49,10 +50,10 @@ ttt_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		local = (char *(*)(char *, struct svc_req *)) checkwinner_1_svc;
 		break;
 
-	case ULTIMA:
-		_xdr_argument = (xdrproc_t) xdr_void;
-		_xdr_result = (xdrproc_t) xdr_play_args;
-		local = (char *(*)(char *, struct svc_req *)) ultima_1_svc;
+	case TROCASIMBOLOS:
+		_xdr_argument = (xdrproc_t) xdr_simbol;
+		_xdr_result = (xdrproc_t) xdr_void;
+		local = (char *(*)(char *, struct svc_req *)) trocasimbolos_1_svc;
 		break;
 
 	default:

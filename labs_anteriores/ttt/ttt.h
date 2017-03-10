@@ -21,7 +21,13 @@ struct play_args {
 };
 typedef struct play_args play_args;
 
-#define TTT 0x31478982
+struct simbol {
+	char simbol0;
+	char simbol1;
+};
+typedef struct simbol simbol;
+
+#define TTT 0x31469852
 #define V1 1
 
 #if defined(__STDC__) || defined(__cplusplus)
@@ -34,9 +40,9 @@ extern  int * play_1_svc(play_args *, struct svc_req *);
 #define CHECKWINNER 3
 extern  int * checkwinner_1(void *, CLIENT *);
 extern  int * checkwinner_1_svc(void *, struct svc_req *);
-#define ULTIMA 4
-extern  play_args * ultima_1(void *, CLIENT *);
-extern  play_args * ultima_1_svc(void *, struct svc_req *);
+#define TROCASIMBOLOS 4
+extern  void * trocasimbolos_1(simbol *, CLIENT *);
+extern  void * trocasimbolos_1_svc(simbol *, struct svc_req *);
 extern int ttt_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
@@ -49,9 +55,9 @@ extern  int * play_1_svc();
 #define CHECKWINNER 3
 extern  int * checkwinner_1();
 extern  int * checkwinner_1_svc();
-#define ULTIMA 4
-extern  play_args * ultima_1();
-extern  play_args * ultima_1_svc();
+#define TROCASIMBOLOS 4
+extern  void * trocasimbolos_1();
+extern  void * trocasimbolos_1_svc();
 extern int ttt_1_freeresult ();
 #endif /* K&R C */
 
@@ -59,9 +65,11 @@ extern int ttt_1_freeresult ();
 
 #if defined(__STDC__) || defined(__cplusplus)
 extern  bool_t xdr_play_args (XDR *, play_args*);
+extern  bool_t xdr_simbol (XDR *, simbol*);
 
 #else /* K&R C */
 extern bool_t xdr_play_args ();
+extern bool_t xdr_simbol ();
 
 #endif /* K&R C */
 

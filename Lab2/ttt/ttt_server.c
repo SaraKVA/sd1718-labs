@@ -36,3 +36,14 @@ checkwinner_1_svc(void *argp, struct svc_req *rqstp)
 
   return &result;
 }
+
+
+play_args* ultima(void *argp, struct svc_req *rqstp){
+        
+    static int result;
+    
+    result = ultima();
+    
+    return &result;
+    
+}

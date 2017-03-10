@@ -17,11 +17,14 @@ ttt_1(char *host)
 	play_args  play_1_arg;
 	int  *result_3;
 	char *checkwinner_1_arg;
-    
-    int player = 0;                              /* Player number - 0 or 1               */
-    int go = 0;                                  /* Square selection number for turn     */
-    int winner = -1;                              /* The winning player                   */
-    int play_res;
+	int  *result_4;
+	simbol trocaSimbolos_1_arg;
+
+	int player = 0;                              /* Player number - 0 or 1               */
+	int go = 0;                                  /* Square selection number for turn     */
+	int winner = -1;                              /* The winning player                   */
+	int play_res;
+
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, TTT, V1, "udp");
@@ -30,6 +33,15 @@ ttt_1(char *host)
 		exit (1);
 	}
 #endif	/* DEBUG */
+
+
+	trocaSimbolos_1_arg.simbol0 = 'A';
+	trocaSimbolos_1_arg.simbol1 = 'B';
+
+	result_4 = trocasimbolos_1(&trocaSimbolos_1_arg, clnt);
+	if (result_4 == (void *) NULL) {
+		clnt_perror (clnt, "call failed");
+	}	
 
 	result_1 = currentboard_1((void*)&currentboard_1_arg, clnt);
 	if (result_1 == (char **) NULL) {
@@ -43,86 +55,70 @@ ttt_1(char *host)
 	if (result_3 == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	
-	/* The main game loop. The game continues for up to 9 turns */
+
+
+  /* The main game loop. The game continues for up to 9 turns */
   /* As long as there is no winner                            */
   do {
     /* Get valid player square selection */
     do {
-      /* Print current board */
-      
-      result_1 = currentboard_1((void*)&currentboard_1_arg, clnt);
-      if (result_1 == (char **) NULL) {
-          clnt_perror (clnt, "call failed");
-      }
-      printf("%s\n", *result_1);
+
+      printf("%s\n", *currentboard_1((void*)&currentboard_1_arg, clnt));
       
       printf("\nPlayer %d, please enter the number of the square "
 	     "where you want to place your %c (or 0 to refresh the board): ", player,(player==1)?'X':'O');
+
       scanf(" %d", &go);
 
       if (go == 0){
-        play_res = 0;
-        continue;
+		play_res = 0;
+		continue;
       }
 
       play_1_arg.row = --go/3;                                 /* Get row index of square      */
       play_1_arg.column = go%3;                                /* Get column index of square   */
       play_1_arg.player = player;
       
-      
-      result_2 = play_1(&play_1_arg, clnt);
-      if (result_2 == (int *) NULL) {
-          clnt_perror (clnt, "call failed");
-      }
-        
-      play_res = *result_2;
-      
-      
+      play_res = *play_1(&play_1_arg, clnt);
       if (play_res != 0) {
-        switch (play_res) {
-            case 1:
-                printf("Position outside board.");
-                break;
-            case 2:
-                printf("Square already taken.");
-                break;
-            case 3:
-                printf("Not your turn.");
-                break;
-            case 4:
-                printf("Game has finished.");
-                break;
-        }
-        printf(" Try again...\n");
+	switch (play_res) {
+	case 1:
+	  printf("Position outside board.");
+	  break;
+	case 2:
+	  printf("Square already taken.");
+	  break;
+	case 3:
+	  printf("Not your turn.");
+	  break;
+	case 4:
+	  printf("Game has finished.");
+	  break;
+	}
+	printf(" Try again...\n");
       }
     } while(play_res != 0);
-	
-    result_3 = checkwinner_1((void*)&checkwinner_1_arg, clnt);
-	if (result_3 == (int *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}
-    winner = *result_3;
     
+
+
+    winner = *checkwinner_1((void*)&checkwinner_1_arg ,  clnt);
+
     player = (player+1)%2;                           /* Select player */
  
     printf("player %d\n", player);
 
   } while (winner == -1);
   
-  /* Game is over so display the final board */
-  result_1 = currentboard_1((void*)&currentboard_1_arg, clnt);
-    if (result_1 == (char **) NULL) {
-        clnt_perror (clnt, "call failed");
-    }
-  printf("%s\n", *result_1);
+
+	
+	printf("%s\n", *currentboard_1((void*)&currentboard_1_arg , clnt ));
   
   /* Display result message */
   if(winner == 2)
     printf("\nHow boring, it is a draw\n");
   else
     printf("\nCongratulations, player %d, YOU ARE THE WINNER!\n", winner);
-
+	
 	
 #ifndef	DEBUG
 	clnt_destroy (clnt);

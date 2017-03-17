@@ -1,0 +1,4 @@
+Foi implementada uma interface remota que disponibilizava os serviços remotos 
+pretendidos implementados num objecto TTT presente no lado do servidor.
+Implementamos uma classe RemoteServer que instanciava um objecto TTT que implementava a classe remota. Apos a instanciacao registamos o servidor no servidor de nomes
+Do lado do cliente os métodos são chamados remotamente.

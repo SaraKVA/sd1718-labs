@@ -1,0 +1,8 @@
+4
+    i) 
+       Com RPC invoca-se uma funcao local (stub) que se encarrega da comunicacao entre processos
+       Com RMI invoca-se um metodo sobre um objecto local (proxy) que não executa o método mas encarrega-se de o passar ao objeto remoto.
+       Ambas usam as técnicas de Marshling e Unmarshling para o encapsulamento e desencapsulamento das mensagens e conversao de dados.
+    
+    ii) Cliente: Game
+        Servidor: TTT, TTTService e RemoteServer (classe com a funcao main)
